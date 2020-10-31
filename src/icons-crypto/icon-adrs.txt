@@ -1,0 +1,5 @@
+https://s3-symbol-logo.tradingview.com/crypto/XTVCBTC.svg
+https://s3-symbol-logo.tradingview.com/crypto/XTVCETH.svg
+https://s3-symbol-logo.tradingview.com/crypto/XTVCUSDT.svg
+https://s3-symbol-logo.tradingview.com/crypto/XTVCXRP.svg
+https://s3-symbol-logo.tradingview.com/crypto/XTVCBCH.svg

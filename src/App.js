@@ -1,40 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
-
-// import 'ag-grid-community/dist/styles/ag-grid.css';
-// import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-
 import './App.scss';
 
+
 const App = () => {
-  // const [gridApi, setGridApi] = useState(null);
-  // const [gridColumnApi, setGridColumnApi] = useState(null);
-
-  // const [rowData, setRowData] = useState([
-  //     {make: "Toyota", model: "Celica", price: 35000},
-  //     {make: "Ford", model: "Mondeo", price: 32000},
-  //     {make: "Porsche", model: "Boxter", price: 72000}
-  // ]);
-
   const [rowData, setRowData] = useState([]);
 
   useEffect(() => {
-    fetch('https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/sample-data/rowData.json')
-    .then(result => result.json())
-    .then(rowData => setRowData(rowData))
+    // fetch('https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/sample-data/rowData.json')
+    setInterval(() => {
+      fetch('http://localhost:5000/get_data')
+      .then(result => result.json())
+      .then(rowData => setRowData(rowData))
+    }, 5000)
   }, []);
+
+  const ShowIconRenderer = props => {
+    const createImgSource = (value) => {
+      const source = "https://s3-symbol-logo.tradingview.com/crypto/XTVC" + value + ".svg";
+      return source;
+    };
+    return <span><img src={createImgSource(props.value)} alt="crypto-icon"></img> {props.value}</span>;
+  };
 
   return (
     <div className="App">
-      <h1>Crpyto Screener</h1>
-      <div className="ag-theme-material" style={ { height: 400, width: 600 } }>
+      <h1 className="title">Crpyto Screener</h1>
+      <div className="ag-theme-material" style={ { height: 500, width: 400 } }>
       <AgGridReact
-        rowData={rowData}>
-        <AgGridColumn field="make" sortable={true} filter={true}></AgGridColumn>
-        <AgGridColumn field="price" sortable={true} filter={true}></AgGridColumn>
-        <AgGridColumn field="model" sortable={true} filter={true}></AgGridColumn>
+        rowData={rowData}
+        defaultColDef={ { sortable: true, filter: true, flex: 1 } }
+        frameworkComponents={ { showIconRenderer: ShowIconRenderer } }  
+      >
+        <AgGridColumn field="base" cellRenderer="showIconRenderer"></AgGridColumn>
+        <AgGridColumn field="value"></AgGridColumn>
+        <AgGridColumn field="exchange"></AgGridColumn>
       </AgGridReact>
-    </div>
+      </div>
     </div>
   );
 };
