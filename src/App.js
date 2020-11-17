@@ -12,7 +12,7 @@ const App = () => {
       fetch('http://localhost:5000/get_data')
       .then(result => result.json())
       .then(rowData => setRowData(rowData))
-    }, 5000)
+    }, 10000)
   }, []);
 
   const ShowIconRenderer = props => {
@@ -26,7 +26,7 @@ const App = () => {
   return (
     <div className="App">
       <h1 className="title">Crpyto Screener</h1>
-      <div className="ag-theme-material" style={ { height: 500, width: 400 } }>
+      <div className="ag-theme-material" style={ { height: 640, width: 400 } }>
       <AgGridReact
         rowData={rowData}
         defaultColDef={ { sortable: true, filter: true, flex: 1 } }
