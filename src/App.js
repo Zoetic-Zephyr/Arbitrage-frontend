@@ -1,44 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
-import './App.scss';
+import logo from './logo.svg';
+import './App.css';
 
-
-const App = () => {
-  const [rowData, setRowData] = useState([]);
-
-  useEffect(() => {
-    // fetch('https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/sample-data/rowData.json')
-    setInterval(() => {
-      fetch('http://localhost:5000/get_data')
-      .then(result => result.json())
-      .then(rowData => setRowData(rowData))
-    }, 5000)
-  }, []);
-
-  const ShowIconRenderer = props => {
-    const createImgSource = (value) => {
-      const source = "https://s3-symbol-logo.tradingview.com/crypto/XTVC" + value + ".svg";
-      return source;
-    };
-    return <span><img src={createImgSource(props.value)} alt="crypto-icon"></img> {props.value}</span>;
-  };
-
+function App() {
   return (
     <div className="App">
-      <h1 className="title">Crpyto Screener</h1>
-      <div className="ag-theme-material" style={ { height: 500, width: 400 } }>
-      <AgGridReact
-        rowData={rowData}
-        defaultColDef={ { sortable: true, filter: true, flex: 1 } }
-        frameworkComponents={ { showIconRenderer: ShowIconRenderer } }  
-      >
-        <AgGridColumn field="base" cellRenderer="showIconRenderer"></AgGridColumn>
-        <AgGridColumn field="value"></AgGridColumn>
-        <AgGridColumn field="exchange"></AgGridColumn>
-      </AgGridReact>
-      </div>
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
     </div>
   );
-};
+}
 
 export default App;
