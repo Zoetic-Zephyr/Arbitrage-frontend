@@ -4,16 +4,17 @@ import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
 
 // import BasicTable from './Components/Archive/BasicTable;'
 // import FixedHeader from './Components/Archive/FixedHeader;'
+
 import NavBar from './Components/NavBar';
-import Login from './Components/Login';
+
 import Screener from './Components/Screener';
-// import Exchange from './Components/Exchange';
 import Forum from './Components/Forum';
 import TransHistory from './Components/TransHistory';
-// import Profile from './Components/Profile';
 
 import Exchange from './Components/Login_Profile_Exchange/exchange_page';
+// import Profile from './Components/Profile';
 import CreateUser from './Components/Login_Profile_Exchange/create_user';
+// import Login from './Components/Login';
 
 
 function App() {

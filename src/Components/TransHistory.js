@@ -76,8 +76,8 @@ export default function TransHistory() {
     const classes = useStyles();
 
     return (
-      <Paper className={classes.root}>
         <TableContainer className={classes.container}>
+          <h1 className="page-title">Transactions</h1>
           <Table stickyHeader className={classes.table} aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -103,6 +103,5 @@ export default function TransHistory() {
             </TableBody>
           </Table>
         </TableContainer>
-      </Paper>
   )
 }
