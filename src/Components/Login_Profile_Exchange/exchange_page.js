@@ -63,13 +63,20 @@ export default class PersonList extends React.Component {
     super(props);
     this.bitcoin_buy = this.bitcoin_buy.bind(this); 
     this.bitcoin_sell = this.bitcoin_sell.bind(this); 
+    this.handleChange = this.handleChange.bind(this);
   } 
 
-  handleChange = (event) => {
-    this.setState({
-      value: event.target.value,
-    });
-  };
+  // handleChange = (event) => {
+  //   this.setState({
+  //     value: event.target.value,
+  //   });
+  // };
+
+  handleChange(e){
+    var obj = {}
+    obj[e.target.name] = e.target.value
+    this.setState(obj);
+  }
 
  handleClick = () => {
     this.setState({
@@ -77,7 +84,7 @@ export default class PersonList extends React.Component {
     });
   };
 
-  exchangeOperation = (exchange_id, coin_id, op, amount) => {
+  exchangeOperation = async (exchange_id, coin_id, op, amount) => {
     // TODO: fix amount value
     let json_data = {
       username: this.state.username, 
@@ -85,33 +92,35 @@ export default class PersonList extends React.Component {
       exchange: exchange_id, 
       coin_id: coin_id, 
       op: op, 
-      amount: amount,
+      amount: parseInt(amount),
     }
 
-    let response = postData('https://todo-sm7v5imswq-uc.a.run.app/exchange', json_data); 
-    console.log(response); 
-    
-    let portfolio_info = {
-      username: this.state.username,
-    }
-    let result = postData('https://todo-sm7v5imswq-uc.a.run.app/user_portfolio', portfolio_info);
-    let portfolio = result['data']['portfolio'];
-    console.error(result['data']);
-    this.state.portfolio = portfolio;
+    let return_value = await postData('https://todo-sm7v5imswq-uc.a.run.app/exchange', json_data); 
+    // let return_value = await postData('http://0.0.0.0:8080/exchange', json_data); 
+    return return_value;
+  };
 
-  }; 
 
-  bitcoin_buy(){
-    this.exchangeOperation(this.state.exchange_id, this.state.coin_id, 'buy', this.state.amount); 
+  bitcoin_buy = async (e) => {
+    e.preventDefault();
+    await this.exchangeOperation(this.state.exchange_id, this.state.coin_id, 'buy', this.state.amount).then((response) => {
+      console.log(response);
+      // alert("bought");
+    }); 
     this.state.alertStatus = true;
   }
 
-  bitcoin_sell(){
-    this.exchangeOperation(this.state.exchange_id, this.state.coin_id, 'sell', this.state.amount); 
+  bitcoin_sell = async (e) => {
+    e.preventDefault();
+    await this.exchangeOperation(this.state.exchange_id, this.state.coin_id, 'sell', this.state.amount).then((response) => {
+      console.log(response);
+      // alert("sold");
+    }); 
     this.state.alertStatus = true;
   }
 
   componentDidMount() {
+    //this.bitcoin_buy();
   }
 
   render() {
@@ -127,7 +136,7 @@ export default class PersonList extends React.Component {
           <Avatar className={classes.avatar}>
           </Avatar>
           <Typography component="h1" variant="h5">
-            Current Portfolio: {data}
+            Portfolio and Trading
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -135,10 +144,10 @@ export default class PersonList extends React.Component {
               margin="normal"
               required
               fullWidth
-              id="email"
+              id="coin_id"
               label="Bitcoin ID"
-              name="email"
-              autoComplete="email"
+              name="coin_id"
+              autoComplete="coin_id"
               autoFocus
               value={this.state.coin_id}
               onChange={this.handleChange}
@@ -148,10 +157,10 @@ export default class PersonList extends React.Component {
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="exchange_id"
               label="Exchange ID"
-              id="password"
-              autoComplete="current-password"
+              id="exchange_id"
+              autoComplete="exchange_id"
               value={this.state.exchange_id}
               onChange={this.handleChange}
             />
@@ -160,10 +169,9 @@ export default class PersonList extends React.Component {
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="amount"
               label="Amount (by coin unit)"
-              type="password"
-              id="password"
+              id="amount"
               autoComplete="current-password"
               value={this.state.amount}
               onChange={this.handleChange}
@@ -174,7 +182,7 @@ export default class PersonList extends React.Component {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={this.bitcoin_buy}
+              onClick={e => this.bitcoin_buy(e)}
             >
               Buy
             </Button>
@@ -184,7 +192,7 @@ export default class PersonList extends React.Component {
               variant="contained"
               color="secondary"
               className={classes.submit}
-              onClick={this.bitcoin_sell}
+              onClick={e => this.bitcoin_sell(e)}
             >
               Sell
             </Button>

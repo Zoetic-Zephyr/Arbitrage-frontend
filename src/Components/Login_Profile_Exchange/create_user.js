@@ -54,11 +54,11 @@ export default class PersonList extends React.Component {
     toDashboard: false, 
   }
 
-  handleChange = (event) => {
-    this.setState({
-      value: event.target.value,
-    });
-  };
+  handleChange(e){
+    var obj = {}
+    obj[e.target.name] = e.target.value
+    this.setState(obj);
+  }
 
  handleClick = () => {
     this.setState({
@@ -68,6 +68,7 @@ export default class PersonList extends React.Component {
 
   constructor(props) {
     super(props); 
+    this.handleChange = this.handleChange.bind(this); 
     //this.sendLoginRequest = this.sendLoginRequest.bind(this); 
   }
 
@@ -110,10 +111,10 @@ export default class PersonList extends React.Component {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
               value={this.state.username}
               onChange={this.handleChange}
@@ -127,7 +128,7 @@ export default class PersonList extends React.Component {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="password"
               value={this.state.password}
               onChange={this.handleChange}
             />
