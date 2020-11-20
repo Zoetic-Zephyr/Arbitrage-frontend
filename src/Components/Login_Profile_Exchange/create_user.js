@@ -1,13 +1,13 @@
 import React from 'react';
 import { 
-  BrowserRouter as Router, 
-  Route, 
+  // BrowserRouter as Router, 
+  // Route, 
   Link, 
-  Switch, 
+  // Switch, 
   Redirect
 } from 'react-router-dom'; 
 
-import Avatar from '@material-ui/core/Avatar';
+// import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -49,8 +49,8 @@ const classes = makeStyles((theme) => ({
 export default class PersonList extends React.Component {
   // TODO: retrieve username and password from AsyncStorage instead
   state = {
-    username: "testusername", 
-    password: "testpassword", 
+    username: "", 
+    password: "", 
     toDashboard: false, 
   }
 
@@ -95,15 +95,9 @@ export default class PersonList extends React.Component {
       <div className="exchange">
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <div className={classes.paper}>
-
-          
-
-          <Avatar className={classes.avatar}>
-            
-          </Avatar>
+        <div className={classes.paper} style={{marginTop: '20px'}}>
           <Typography component="h1" variant="h5">
-            Sign in
+            Welcome to Arbitrage
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -133,7 +127,7 @@ export default class PersonList extends React.Component {
               onChange={this.handleChange}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" color="secondary" />}
               label="Remember me"
             />
             <Button
@@ -149,12 +143,12 @@ export default class PersonList extends React.Component {
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2" to="">
-                  Forgot password?
+                  I forgot my credentials
                 </Link>
               </Grid>
               <Grid item>
                 <Link href="#" variant="body2" to="">
-                  {"Don't have an account? Sign Up"}
+                  {"No account? Sign Up here"}
                 </Link>
               </Grid>
             </Grid>

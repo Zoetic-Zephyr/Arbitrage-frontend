@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 // import BasicTable from './Components/Archive/BasicTable;'
 // import FixedHeader from './Components/Archive/FixedHeader;'
