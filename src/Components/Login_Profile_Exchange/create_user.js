@@ -24,6 +24,7 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles'; 
 
 import { postData } from './utils';
+import { AsyncStorage } from 'AsyncStorage';
 
 const classes = makeStyles((theme) => ({
   paper: {
@@ -72,7 +73,15 @@ export default class PersonList extends React.Component {
     //this.sendLoginRequest = this.sendLoginRequest.bind(this); 
   }
 
-  sendLoginRequest = () => {
+  sendLoginRequest = async (e) => {
+    e.preventDefault(); 
+    try {
+      await AsyncStorage.setItem('username', this.state.username);
+      await AsyncStorage.setItem('password', this.state.password);
+    } catch (error) {
+      alert(error); 
+    }
+
     let jsonData = {
       username: this.state.username, 
       password: this.state.password,
@@ -136,7 +145,7 @@ export default class PersonList extends React.Component {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={this.sendLoginRequest}
+              onClick={e=>{this.sendLoginRequest(e)}}
             >
               Sign In
             </Button>

@@ -24,6 +24,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { postData } from './utils';
 import { Alert } from '@material-ui/lab';
+import { AsyncStorage } from 'AsyncStorage';
+
 // var data = 0; 
 const classes = makeStyles((theme) => ({
   paper: {
@@ -48,6 +50,7 @@ const classes = makeStyles((theme) => ({
 
 export default class PersonList extends React.Component {
   // TODO: retrieve username and password from AsyncStorage instead
+
   state = {
     username: "testusername", 
     password: "testpassword", 
@@ -85,10 +88,23 @@ export default class PersonList extends React.Component {
   };
 
   exchangeOperation = async (exchange_id, coin_id, op, amount) => {
+    let current_username = ""; 
+    let current_password = ""; 
+
+    try {
+      current_username = await AsyncStorage.getItem('username');
+      current_password = await AsyncStorage.getItem('password');
+      if (current_username == null || current_password == null) {
+        alert('empty local storage for auth'); 
+      }
+    } catch (error) {
+      alert(error); 
+    }
+
     // TODO: fix amount value
     let json_data = {
-      username: this.state.username, 
-      password: this.state.password,
+      username: current_username, 
+      password: current_password,
       exchange: exchange_id, 
       coin_id: coin_id, 
       op: op, 

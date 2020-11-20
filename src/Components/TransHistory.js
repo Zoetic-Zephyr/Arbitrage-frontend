@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { AsyncStorage } from 'AsyncStorage';
 // import Paper from '@material-ui/core/Paper';
 
 
@@ -52,12 +53,29 @@ const useStyles = makeStyles({
   },
 });
 
+async function getUsernameFromStorage() {
+  let current_username = ""; 
+  
+  try {
+    current_username = await AsyncStorage.getItem('username');
+    if (current_username == null) {
+      alert('empty local storage for auth'); 
+    }
+  } catch (error) {
+    alert(error); 
+  }
+
+  return current_username;
+}
+
 export default function TransHistory() {
     const [transactions, setTransactions] = useState([])
 
-    useEffect(() => {
+    useEffect(async () => {
+      let current_username = await getUsernameFromStorage(); 
+      alert(current_username);
       let data = {
-        username: 'testusername', 
+        username: current_username, 
         start_time: '00:00:00',
         end_time: '23:59:59'
       };
