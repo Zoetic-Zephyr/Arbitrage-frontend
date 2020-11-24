@@ -73,7 +73,6 @@ export default function TransHistory() {
 
     useEffect(async () => {
       let current_username = await getUsernameFromStorage(); 
-      alert(current_username);
       let data = {
         username: current_username, 
         start_time: '00:00:00',
@@ -84,7 +83,7 @@ export default function TransHistory() {
       postData('https://todo-sm7v5imswq-uc.a.run.app/trans_history', data)
       .then(res => {
         console.log(res.data.trans_history); // JSON data parsed by `data.json()` call
-        setTransactions(res.data.trans_history)
+        setTransactions(res.data.trans_history);
       })
       .catch(err => {
         console.log(err);
@@ -101,7 +100,7 @@ export default function TransHistory() {
               <TableRow>
                 <StyledTableCell>Timestamp</StyledTableCell>
                 <StyledTableCell align="right">Platform</StyledTableCell>
-                <StyledTableCell align="right">Coin_id</StyledTableCell>
+                <StyledTableCell align="right">Coin_ID</StyledTableCell>
                 <StyledTableCell align="right">Buy/Sell</StyledTableCell>
                 <StyledTableCell align="right">Amount</StyledTableCell>
               </TableRow>
