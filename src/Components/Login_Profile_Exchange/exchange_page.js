@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 // import { 
 //   BrowserRouter as Router, 
 //   Route, 
@@ -25,6 +26,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { postData } from './utils';
 import { Alert } from '@material-ui/lab';
 import { AsyncStorage } from 'AsyncStorage';
+
+import Portfolio from '../Portfolio';
+
 
 // var data = 0; 
 const classes = makeStyles((theme) => ({
@@ -54,12 +58,15 @@ export default class PersonList extends React.Component {
   state = {
     username: "testusername", 
     password: "testpassword", 
-    coin_id: "BTC", // TODO: add switching later
     exchange_id: "binance",
+    // ZZ
     amount: 0,
+    coin_id: "BTC", // TODO: add switching later
+    money: 0,
+    portfolio: 0,
+    // ZZ
     alertKey: 'key',
     alertStatus: '',
-    portfolio: 0,
   }
 
   constructor(props) {
@@ -101,7 +108,6 @@ export default class PersonList extends React.Component {
       alert(error); 
     }
 
-    // TODO: fix amount value
     let json_data = {
       username: current_username, 
       password: current_password,
@@ -112,7 +118,6 @@ export default class PersonList extends React.Component {
     }
 
     let return_value = await postData('https://todo-sm7v5imswq-uc.a.run.app/exchange', json_data); 
-    // let return_value = await postData('http://0.0.0.0:8080/exchange', json_data); 
     return return_value;
   };
 
@@ -150,6 +155,9 @@ export default class PersonList extends React.Component {
           {this.state.alertStatus ? <Alert key={this.state.alertkey} message={'success'} /> : null}
 
           <h1 className="page-title">Portfolio and Trading</h1>
+
+          <Portfolio />
+
           <form className={classes.form} noValidate>
             <TextField
               variant="outlined"
@@ -207,6 +215,9 @@ export default class PersonList extends React.Component {
               onClick={e => this.bitcoin_sell(e)}
             >
               Sell
+            </Button>
+            <Button component={ Link } to="/" color="primary">
+              Log out
             </Button>
           </form>
         </div>
